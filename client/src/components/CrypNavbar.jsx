@@ -1,13 +1,13 @@
 import React from 'react';
 import cryCard from '../Pages/Cryptopage'
 import CryP from '../Pages/Cryptopage'
+import Project from '../components/navCard'
+
 import {
     Row,
     Col,
 
 } from "react-bootstrap";
-
-function handleClick(e) { e.preventDefault(); console.log('The link was clicked.'); }
 
 export const Header = () => {
     return (
@@ -27,8 +27,13 @@ export const Header = () => {
                     </Col>
                 </div>
             </Row>
+            <Row>
+                <Col>
+                    <Project />
+                </Col>
+            </Row>
 
-            <cryCard></cryCard>
+
         </nav>
     );
 };

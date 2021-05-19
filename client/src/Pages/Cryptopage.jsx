@@ -1,41 +1,78 @@
 // import necessary packages/modules, components, stylesheets and images
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
     Button,
     ButtonGroup,
     Container,
     Jumbotron,
+    Row,
+    Col,
+
+
 } from "react-bootstrap";
-import { crypAPI } from "../Utils/CryP"
-import { SearchForm } from '../components/SearchForm'
+import Nomics from "nomics";
+import Card from '../components/Card'
+import SearchForm from '../components/SearchForm'
+import nomics from '../Utils/CryP'
+import MovieDetail from "../components/cryPdetail";
 
-import { ScaleLoader } from 'react-spinners';
-import Project from "../components/navCard";
-import { render } from "react-dom";
 
-export class CryP extends React.
-    Component {
-    constructor(props) {
-        super(props);
-        this.state = { value: '' };
+export class CryP extends Component {
+    state = {
+        result: [],
+        search: '',
+        id: []
+    };
+    // When this component mounts, search for the movie "The Matrix"
+    componentDidMount() {
+        this.searchCryp("");
     }
 
-    async handleSearch(event) {
-    
-    }
+
+
+
+    searchCryp = query => {
+        fetch("https://api.nomics.com/v1/currencies/ticker?key=fffc082c271302b57c140b91af190d16&ids=" + query + "&interval=1d,30d&convert=EUR&per-page=100&page=1")
+            .then(response => response.json())
+            .then(data => console.log(data))
+    };
+    handleInputChange = event => {
+        const value = event.target.value;
+        const name = event.target.name;
+        this.setState({
+            [name]: value
+        });
+    };
+
+    // When the form is submitted, search the OMDB API for the value of `this.state.search`
+    handleFormSubmit = event => {
+        event.preventDefault();
+        this.searchCryp(this.state.search);
+    };
+
     render() {
         return (
+            <Container>
+                <Row>
+                    <Col size="md-8">
+                        <Card heading={this.state.result.map(result => {
+                            console.log(result[0], 'thgr')
+                            return (<Card key={result[0]} id={result[0]} />)
+                        }) || "Search to display your Crypto"}>
 
-            <div className="search-form">
-                <SearchForm />
-            </div>
-
-
-
+                            <SearchForm
+                                value={this.state.search}
+                                handleInputChange={this.handleInputChange}
+                                handleFormSubmit={this.handleFormSubmit}
+                            />
+                        </Card>
+                    </Col>
+                </Row>
+            </Container >
         );
     }
 }
-// export Homepage from Homepage.jsx
 
+// export Homepage from Homepage.jsx
 export default CryP;

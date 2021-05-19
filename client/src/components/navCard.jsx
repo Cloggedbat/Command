@@ -12,7 +12,7 @@ function Project(props) {
         <>
             <div className="card m-3 p-3" style={{ width: "25rem" }}>
                 <div className="card-title mt-3 mb-0">
-                    <h2>{props.heading}</h2>
+                    <h2>{props.currency}</h2>
 
                 </div>
             </div>
