@@ -4,18 +4,27 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { MainP } from './Homepage';
 import { CryP } from './Cryptopage';
 import Header from '../components/CrypNavbar'
-
+import { Row, Col } from 'react-bootstrap';
+import './Landingpage.css'
 
 // import Navbar from './components/Navbar';
 
 function land() {
     return (
         <>
-            <Header />
-            <br />
-            <br />
+            <Row>
+                <Col>
+                    <div className='header'>
+                        <Header />
+                    </div>
+                </Col>
+            </Row>
 
-            {/* <MainP></MainP> */}
+            <Row>
+                <Col>
+                    <MainP></MainP>
+                </Col>
+            </Row>
             {/* <CryP></CryP> */}
         </>
 
