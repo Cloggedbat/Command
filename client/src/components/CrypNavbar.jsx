@@ -13,13 +13,13 @@ export const Header = () => {
     return (
         <nav className="navbar navbar-dark navbar-expand-lg fixed-top bg-black-transparent shadow">
             <div></div>
+
+            <Col>
+                <h1>Command Center</h1>
+            </Col>
+
+
             <Row>
-                <Col>
-                    <h1>Command Center</h1>
-                </Col>
-
-
-
                 <div className="search-form">
                     <Col>
 
@@ -27,10 +27,7 @@ export const Header = () => {
                     </Col>
                 </div>
             </Row>
-            <Row>
-                <Col>
-                </Col>
-            </Row>
+
 
 
         </nav>

@@ -40,13 +40,11 @@ export function MainP() {
     }, []);
     return (
         <Container id="main-container">
-            <Jumbotron id="main-jumbotron">
-                <h2 className="title"><i className="fa fa-money"></i>   Daily Crypto</h2>
-                <div className="search-form">
-                    <input type="text" value={Coin} onChange={(e) => setCryp(e.target.value)} placeholder="Enter your coin name" />
-                    <button type="button" onClick={() => getData()}>Search</button>
-                </div>
-            </Jumbotron>
+            <h2 className="title"><i className="fa fa-money"></i>   Daily Crypto</h2>
+            <div className="search-form">
+                <input type="text" value={Coin} onChange={(e) => setCryp(e.target.value)} placeholder="Enter your coin name" />
+                <button type="button" onClick={() => getData()}>Search</button>
+            </div>
             {loading ? (
                 <div className="loader-container">
                     <ScaleLoader
