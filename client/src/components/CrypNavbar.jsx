@@ -29,7 +29,6 @@ export const Header = () => {
             </Row>
             <Row>
                 <Col>
-                    <Project />
                 </Col>
             </Row>
 

@@ -1,78 +1,75 @@
 // import necessary packages/modules, components, stylesheets and images
-import axios from "axios";
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Button,
     ButtonGroup,
     Container,
     Jumbotron,
-    Row,
-    Col,
-
-
 } from "react-bootstrap";
-import Nomics from "nomics";
 import Card from '../components/Card'
-import SearchForm from '../components/SearchForm'
-import nomics from '../Utils/CryP'
-import MovieDetail from "../components/cryPdetail";
+import { crypAPI } from "../Utils/CryP"
+import { ScaleLoader } from 'react-spinners';
 
+export function MainP() {
+    const [cryData, setcryData] = useState(null);
+    const [priceData, getPrice] = useState('null')
+    const [Coin, setCryp] = useState(' ');
+    const [loading, setLoading] = useState(false);
 
-export class CryP extends React.Component {
-    state = {
-        result: [],
-        search: '',
-        id: []
-    };
-    // When this component mounts, search for the movie "The Matrix"
-    componentDidMount() {
-        this.searchCryp("");
+    const getData = async () => {
+        try {
+            setLoading(true);
+            const data = await crypAPI(Coin);
+            setcryData(data[0].id);
+            getPrice(data[0].price)
+
+            setLoading(false);
+        } catch (error) {
+            console.log(error.message);
+            setLoading(false);
+        }
     }
-
-
-
-
-    searchCryp = query => {
-        fetch("https://api.nomics.com/v1/currencies/ticker?key=fffc082c271302b57c140b91af190d16&ids=" + query + "&interval=1d,30d&convert=EUR&per-page=100&page=1")
-            .then(response => response.json())
-            .then(data => console.log(data))
-    };
-    handleInputChange = event => {
-        const value = event.target.value;
-        const name = event.target.name;
-        this.setState({
-            [name]: value
-        });
-    };
-
-    // When the form is submitted, search the OMDB API for the value of `this.state.search`
-    handleFormSubmit = event => {
-        event.preventDefault();
-        this.searchCryp(this.state.search);
-    };
-
-    render() {
-        return (
-            <Container>
-                <Row>
-                    <Col size="md-8">
-                        <Card heading={this.state.result.map(result => {
-                            console.log(result[0])
-                            return (<Card key={result[0]} id={result[0]} />)
-                        }) || "Search to display your Crypto"}>
-
-                            <SearchForm
-                                value={this.state.search}
-                                handleInputChange={this.handleInputChange}
-                                handleFormSubmit={this.handleFormSubmit}
-                            />
+    console.log(priceData)
+    const override = `
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+    `;
+    useEffect(() => {
+        getData();
+    }, []);
+    return (
+        <Container id="main-container">
+            <Jumbotron id="main-jumbotron">
+                <h2 className="title"><i className="fa fa-money"></i>   Daily Crypto</h2>
+                <div className="search-form">
+                    <input type="text" value={Coin} onChange={(e) => setCryp(e.target.value)} placeholder="Enter your coin name" />
+                    <button type="button" onClick={() => getData()}>Search</button>
+                </div>
+            </Jumbotron>
+            {loading ? (
+                <div className="loader-container">
+                    <ScaleLoader
+                        css={override}
+                        size={200}
+                        color={"#fff"}
+                        loading={loading}
+                    />
+                </div>
+            ) : (
+                <>
+                    {cryData !== null ? (
+                        <Card className="main-container">
+                            <h4>Live Price Data</h4>
+                            <h4>{cryData}</h4>
+                            <h4>{priceData}</h4>
                         </Card>
-                    </Col>
-                </Row>
-            </Container >
-        );
-    }
+                    ) : null}
+                </>
+            )}
+        </Container>
+    );
 }
-
 // export Homepage from Homepage.jsx
-export default CryP;
+
+export default MainP;
