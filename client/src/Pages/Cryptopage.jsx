@@ -18,7 +18,7 @@ import nomics from '../Utils/CryP'
 import MovieDetail from "../components/cryPdetail";
 
 
-export class CryP extends Component {
+export class CryP extends React.Component {
     state = {
         result: [],
         search: '',
@@ -57,7 +57,7 @@ export class CryP extends Component {
                 <Row>
                     <Col size="md-8">
                         <Card heading={this.state.result.map(result => {
-                            console.log(result[0], 'thgr')
+                            console.log(result[0])
                             return (<Card key={result[0]} id={result[0]} />)
                         }) || "Search to display your Crypto"}>
 
